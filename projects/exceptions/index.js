@@ -1,7 +1,5 @@
 /* ДЗ 3 - работа с исключениями и отладчиком */
 
-//import { error } from 'console';
-
 /*
  Задание 1:
 
@@ -25,7 +23,6 @@
 function isAllTrue(array, fn) {
   let tr = 0;
   let fal = 0;
-  //try {
   if (!Array.isArray(array) || array.length === 0) {
     throw new Error('empty array');
   }
@@ -35,25 +32,15 @@ function isAllTrue(array, fn) {
 
   for (let i = 0; i < array.length; i++) {
     const z = fn(array[i], i, array);
-    if (z === true) {
-      tr++;
-    } else if (z === false) {
-      fal++;
-    }
+    z ? tr++ : fal++;
   }
 
   if (tr === array.length) {
-    console.log(true);
     return true;
   } else if (fal > 0) {
-    console.log(false);
     return false;
   }
-  //} catch (e) {
-  //  console.log(e.message);
-  //};
 }
-//isAllTrue([], 10);
 
 /*
  Задание 2:
@@ -78,7 +65,6 @@ function isAllTrue(array, fn) {
 function isSomeTrue(array, fn) {
   let tr = 0;
   let fal = 0;
-  //try {
   if (!Array.isArray(array) || array.length === 0) {
     throw new Error('empty array');
   }
@@ -88,25 +74,15 @@ function isSomeTrue(array, fn) {
 
   for (let i = 0; i < array.length; i++) {
     const z = fn(array[i], i, array);
-    if (z === true) {
-      tr++;
-    } else if (z === false) {
-      fal++;
-    }
+    z ? tr++ : fal++;
   }
 
   if (tr > 0) {
-    console.log(true);
     return true;
   } else if (fal === array.length) {
-    console.log(false);
     return false;
   }
-  //} catch (e) {
-  //console.log(e.message);
-  //};
 }
-//isSomeTrue([1, 2, 30, 4, 5], 20);
 
 /*
  Задание 3:
@@ -122,7 +98,6 @@ function isSomeTrue(array, fn) {
  */
 function returnBadArguments(fn, ...args) {
   const array = [];
-  //try {
   if (typeof fn !== 'function') {
     throw new Error('fn is not a function');
   }
@@ -134,21 +109,8 @@ function returnBadArguments(fn, ...args) {
       array.push(arg);
     }
   }
-  /*for (var i = 1; i < args.length; i++) {
-    if (fn(args[i], i, args)) {
-      array.push(args[i]);
-    };*/
-  /*try {
-    argument = fn(args[i]);
-  } catch (e) {
-    array.push(args[i])
-  };*/
   return array;
 }
-
-//} catch (e) {
-//  console.log(e.message);
-//};
 
 /*
  Задание 4:
@@ -184,18 +146,10 @@ function calculator(number = 0) {
   return {
     sum(...args) {
       return args.reduce((all, curr) => all + curr, number);
-      /*for (var i = 0; i < args.length; i++) {
-        number += args[i];
-      };
-      return number;*/
     },
 
     dif(...args) {
       return args.reduce((all, curr) => all - curr, number);
-      /*for (var i = 0; i < args.length; i++) {
-        number -= args[i];
-      };
-      return number;*/
     },
 
     div(...args) {
@@ -203,34 +157,14 @@ function calculator(number = 0) {
         throw new Error('division by 0');
       }
       return args.reduce((all, curr) => all / curr, number);
-      //try {
-      /*for (var i = 0; i < args.length; i++) {
-        if (args[i] === 0) {
-          throw new Error("division by 0");
-        };
-        number /= args[i];
-      };
-      return number;*/
-      //} catch (e) {
-      // console.log(e.message);
-      //};
     },
 
     mul(...args) {
       return args.reduce((all, curr) => all * curr, number);
-      /*for (var i = 0; i < args.length; i++) {
-        number *= args[i];
-      };
-      return number;*/
     },
   };
 }
-/*const myCalc = calculator();
-console.log(myCalc.sum(1, 2, 3));
-console.log(myCalc.dif(1, 2, 3));
-console.log(myCalc.mul(1, 2, 3));
-console.log(myCalc.div(1, 2, 3));
-console.log(myCalc.div(2, 0));*/
+
 /* При решении задач, постарайтесь использовать отладчик */
 
 export { isAllTrue, isSomeTrue, returnBadArguments, calculator };

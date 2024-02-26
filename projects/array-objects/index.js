@@ -14,10 +14,6 @@ function forEach(array, fn) {
   for (let i = 0; i < array.length; i++) {
     fn(array[i], i, array);
   }
-  //function fn(item, i, array) {
-  //console.log(item, i, array);
-  //return item;
-  //};
 }
 
 /*
@@ -37,15 +33,9 @@ function map(array, fn) {
     a = fn(array[i], i, array);
     newArr.push(a);
   }
-  //function fn(item) {
-  //item = item ** 2;
-  // newArr.push(item);
-  //};
-  // console.log(newArr);
   return newArr;
 }
 
-//map([4,5,6], (el) => el ** 2);
 /*
  Задание 3:
 
@@ -57,19 +47,13 @@ function map(array, fn) {
    console.log(sum); // выведет 6
  */
 function reduce(array, fn, initial) {
-  //let s = sum;
   let s = initial || array[0],
     i = initial ? 0 : 1;
   for (; i < array.length; i++) {
     s = fn(s, array[i], i, array);
   }
-  //function fn(sum, item) {
-  //sum += item;
-  // };
-  //console.log(s);
   return s;
 }
-//reduce([4, 5, 6], (el) => el + el, 10);
 
 /*
  Задание 4:

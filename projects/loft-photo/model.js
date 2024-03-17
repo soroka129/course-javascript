@@ -1,4 +1,5 @@
 import VK from ' http://vk.com/js/api/openapi.js';
+//import { resolve } from 'path';
 
 const PERM_FRIENDS = 2;
 const PERM_PHOTOS = 4;
@@ -54,11 +55,15 @@ export default {
     });
   },
 
-  logout() {},
+  logout() {
+    return new Promise((resolve, reject) => VK.Auth.revokeGrants(resolve));
+  },
 
   async init() {
     this.photoCache = {};
     this.friends = await this.getFriends();
+    this.user = await this.getUsers();
+    [this.me] = await this.getUsers();
   },
 
   getFriends() {
@@ -99,5 +104,17 @@ export default {
     this.photoCache[id] = photos;
 
     return photos;
+  },
+
+  getUsers(ids) {
+    const params = {
+      fields: ['photo_50', 'photo_100'],
+    };
+
+    if (ids) {
+      params.user_ids = ids;
+    }
+
+    return this.callAPI('users.get', params);
   },
 };

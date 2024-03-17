@@ -2,6 +2,7 @@ import pages from './pages';
 import getRandomElement from './model';
 import mainPage from './mainPage';
 import loginPage from './loginPage';
+import profilePage from './profilePage';
 
 import('./styles.css');
 
@@ -32,3 +33,5 @@ document.addEventListener('click', () => {
   const pageName = getRandomElement(pageNames);
   pages.openPage(pageName);
 });
+
+profilePage.handleEvents();

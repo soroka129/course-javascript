@@ -46,6 +46,7 @@ export default {
 
       VK.Auth.login((response) => {
         if (response.session) {
+          this.token = response.session.sid;
           resolve(response);
         } else {
           console.error(response);
@@ -116,5 +117,48 @@ export default {
     }
 
     return this.callAPI('users.get', params);
+  },
+
+  async callServer(method, queryParams, body) {
+    queryParams = {
+      ...queryParams,
+      method,
+    };
+    const query = Object.entries(queryParams)
+      .reduce((all, [name, value]) => {
+        all.push(`${name}=${encodeURIComponent(value)}`);
+        return all;
+      }, [])
+      .join('&');
+    const params = {
+      headers: {
+        VK_token: this.token,
+      },
+    };
+
+    if (body) {
+      params.method = 'POST';
+      params.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(`/loft-photo-lite-5/api/?${query}`, params);
+
+    return response.json();
+  },
+
+  async like(photo) {
+    return this.callServer('like', { photo });
+  },
+
+  async photoStats(photo) {
+    return this.callServer('photoStats', { photo });
+  },
+
+  async getComments(photo) {
+    return this.callServer('getComments', { photo });
+  },
+
+  async postComments(photo, text) {
+    return this.callServer('postComment', { photo }, { text });
   },
 };
